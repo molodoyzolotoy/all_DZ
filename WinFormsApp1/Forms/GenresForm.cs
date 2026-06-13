@@ -7,11 +7,17 @@ using WinFormsApp1.Models;
 
 namespace WinFormsApp1.Forms
 {
+    /// <summary>
+    /// Форма для управления справочником «Жанры» (CRUD)
+    /// </summary>
     public class GenresForm : Form
     {
         private DataGridView dgvGenres;
         private Button btnAdd, btnEdit, btnDelete;
 
+        /// <summary>
+        /// Конструктор: создаёт элементы управления и загружает список жанров
+        /// </summary>
         public GenresForm()
         {
             this.ClientSize = new System.Drawing.Size(500, 420);
@@ -34,6 +40,9 @@ namespace WinFormsApp1.Forms
             LoadGenres();
         }
 
+        /// <summary>
+        /// Загружает список всех жанров из БД и отображает в DataGridView
+        /// </summary>
         private void LoadGenres()
         {
             using (var context = new AppDbContext())
@@ -45,6 +54,9 @@ namespace WinFormsApp1.Forms
             }
         }
 
+        /// <summary>
+        /// Добавление нового жанра (диалог ввода названия)
+        /// </summary>
         private void AddGenre()
         {
             string newName = Microsoft.VisualBasic.Interaction.InputBox("Введите название жанра:", "Добавление");
@@ -61,6 +73,9 @@ namespace WinFormsApp1.Forms
             LoadGenres();
         }
 
+        /// <summary>
+        /// Редактирование выбранного жанра
+        /// </summary>
         private void EditGenre()
         {
             if (dgvGenres.CurrentRow == null) return;
@@ -80,6 +95,9 @@ namespace WinFormsApp1.Forms
             LoadGenres();
         }
 
+        /// <summary>
+        /// Удаление выбранного жанра (с проверкой наличия связанных книг)
+        /// </summary>
         private void DeleteGenre()
         {
             if (dgvGenres.CurrentRow == null) return;

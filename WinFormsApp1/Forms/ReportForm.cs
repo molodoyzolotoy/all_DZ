@@ -6,10 +6,16 @@ using WinFormsApp1.Data;
 
 namespace WinFormsApp1.Forms
 {
+    /// <summary>
+    /// Форма для отображения трёх аналитических отчётов по книгам
+    /// </summary>
     public class ReportForm : Form
     {
         private DataGridView dgvFullList, dgvCountByGenre, dgvAvgPages;
 
+        /// <summary>
+        /// Конструктор: создаёт три DataGridView и заполняет их отчётами
+        /// </summary>
         public ReportForm()
         {
             this.ClientSize = new System.Drawing.Size(600, 420);
@@ -26,10 +32,14 @@ namespace WinFormsApp1.Forms
             LoadReports();
         }
 
+        /// <summary>
+        /// Загружает данные для трёх отчётов (LINQ to Entities)
+        /// </summary>
         private void LoadReports()
         {
             using (var context = new AppDbContext())
             {
+                // Отчёт 1: полный список книг с названиями жанров (Include + OrderBy)
                 var fullList = context.Books
                     .Include(b => b.Genre)
                     .OrderBy(b => b.Name)
@@ -37,6 +47,7 @@ namespace WinFormsApp1.Forms
                     .ToList();
                 dgvFullList.DataSource = fullList;
 
+                // Отчёт 2: количество книг по жанрам (GroupBy + Count)
                 var countByGenre = context.Books
                     .GroupBy(b => b.Genre != null ? b.Genre.Name : "Без жанра")
                     .Select(g => new { Жанр = g.Key, Количество = g.Count() })
@@ -44,6 +55,7 @@ namespace WinFormsApp1.Forms
                     .ToList();
                 dgvCountByGenre.DataSource = countByGenre;
 
+                // Отчёт 3: среднее количество страниц по жанрам (GroupBy + Average + OrderByDescending)
                 var avgPages = context.Books
                     .Where(b => b.Genre != null)
                     .GroupBy(b => b.Genre!.Name)

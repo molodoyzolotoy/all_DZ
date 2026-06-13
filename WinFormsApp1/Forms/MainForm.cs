@@ -2,10 +2,16 @@
 
 namespace WinFormsApp1.Forms
 {
+    /// <summary>
+    /// Главная форма с навигацией по разделам приложения
+    /// </summary>
     public class MainForm : Form
     {
         private Button btnGenres, btnBooks, btnReport;
 
+        /// <summary>
+        /// Конструктор главной формы: создаёт кнопки меню и задаёт их обработчики
+        /// </summary>
         public MainForm()
         {
             this.ClientSize = new System.Drawing.Size(280, 280);

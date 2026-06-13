@@ -7,11 +7,17 @@ using WinFormsApp1.Models;
 
 namespace WinFormsApp1.Forms
 {
+    /// <summary>
+    /// Форма для управления книгами (CRUD)
+    /// </summary>
     public class BooksForm : Form
     {
         private DataGridView grid;
         private Button btnAdd, btnEdit, btnDelete;
 
+        /// <summary>
+        /// Конструктор: создаёт элементы управления и загружает список книг
+        /// </summary>
         public BooksForm()
         {
             this.Text = "Список книг";
@@ -34,6 +40,9 @@ namespace WinFormsApp1.Forms
             LoadData();
         }
 
+        /// <summary>
+        /// Загружает список книг с названиями жанров (через Include) в DataGridView
+        /// </summary>
         private void LoadData()
         {
             using (var db = new AppDbContext())
@@ -45,6 +54,9 @@ namespace WinFormsApp1.Forms
             }
         }
 
+        /// <summary>
+        /// Добавление новой книги (диалоги ввода названия, страниц, выбор жанра)
+        /// </summary>
         private void AddBook()
         {
             string name = Microsoft.VisualBasic.Interaction.InputBox("Название книги:", "Добавление");
@@ -75,6 +87,9 @@ namespace WinFormsApp1.Forms
             LoadData();
         }
 
+        /// <summary>
+        /// Редактирование выбранной книги (название, страницы, жанр)
+        /// </summary>
         private void EditBook()
         {
             if (grid.CurrentRow == null) return;
@@ -102,6 +117,9 @@ namespace WinFormsApp1.Forms
             LoadData();
         }
 
+        /// <summary>
+        /// Удаление выбранной книги (с подтверждением)
+        /// </summary>
         private void DeleteBook()
         {
             if (grid.CurrentRow == null) return;

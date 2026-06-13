@@ -3,18 +3,35 @@ using WinFormsApp1.Models;
 
 namespace WinFormsApp1.Data
 {
+    /// <summary>
+    /// Контекст базы данных для работы с жанрами и книгами (Entity Framework Core)
+    /// </summary>
     public class AppDbContext : DbContext
     {
+        /// <summary>
+        /// Таблица жанров
+        /// </summary>
         public DbSet<Genre> Genres { get; set; }
+
+        /// <summary>
+        /// Таблица книг
+        /// </summary>
         public DbSet<Book> Books { get; set; }
 
+        /// <summary>
+        /// Настройка подключения к базе данных SQLite
+        /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=app.db");
         }
 
+        /// <summary>
+        /// Заполнение базы данных начальными данными при создании
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Жанры (не менее 4)
             modelBuilder.Entity<Genre>().HasData(
                 new Genre { Id = 1, Name = "Роман" },
                 new Genre { Id = 2, Name = "Фантастика" },
@@ -22,6 +39,7 @@ namespace WinFormsApp1.Data
                 new Genre { Id = 4, Name = "Поэзия" }
             );
 
+            // Книги (не менее 12)
             modelBuilder.Entity<Book>().HasData(
                 new Book { Id = 1, GenreId = 1, Name = "Война и мир", Pages = 1300 },
                 new Book { Id = 2, GenreId = 1, Name = "Анна Каренина", Pages = 800 },
@@ -39,8 +57,6 @@ namespace WinFormsApp1.Data
         }
     }
 }
-
-
 
 
 
